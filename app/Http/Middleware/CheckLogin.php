@@ -32,6 +32,7 @@ class CheckLogin
             {
                 $_SERVER['uid'] = $u['uid'];
                 $_SERVER['user_name'] = $u['user_name'];
+                $_SERVER['token'] = $token;
             }
         }
 

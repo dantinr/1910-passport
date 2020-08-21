@@ -22,4 +22,5 @@ Route::get('/', function () {
 Route::prefix('/web')->middleware('check.login')->group(function(){
     Route::get('/login','Web\LoginController@loginView');       // 登录
     Route::post('/login','Web\LoginController@login');       // 登录
+    Route::get('/logout','Web\LoginController@logout');       // 退出登录
 });

@@ -7,6 +7,7 @@ use App\Model\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Redis;
 
 class LoginController extends Controller
 {
@@ -72,6 +73,18 @@ class LoginController extends Controller
             return view('web.302',$data);
         }
 
+        return redirect($redirect_uri);
+    }
+
+    /**
+     * 退出
+     *  清redis
+     */
+    public function logout(Request $request)
+    {
+        $redirect_uri = $request->get('redirect',env('SHOP_DOMAIN'));
+        $token_key = 'h:login_info:'.$_SERVER['token'];
+        Redis::del($token_key);
         return redirect($redirect_uri);
     }
 }
