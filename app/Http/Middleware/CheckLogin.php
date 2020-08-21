@@ -18,11 +18,13 @@ class CheckLogin
      */
     public function handle($request, Closure $next)
     {
+
         $_SERVER['uid'] = 0;        //默认未登录
         $token = Cookie::get('token');
+
         if($token)
         {
-            $token = Crypt::decryptString($token);        //解密cookie
+            //$token = Crypt::decryptString($token);        //解密cookie
             $token_key = 'h:login_info:'.$token;
             $u = Redis::hGetAll($token_key);
 
@@ -34,7 +36,6 @@ class CheckLogin
         }
 
 
-        return $next($request);
         return $next($request);
     }
 }
