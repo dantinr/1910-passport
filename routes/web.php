@@ -15,6 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+/**
+ * Test
+ */
+Route::prefix('/test')->group(function(){
+    Route::get('/cookie','TestController@test1');
+});
+
 
 /**
  * WEB
