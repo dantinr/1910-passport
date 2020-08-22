@@ -87,4 +87,41 @@ class LoginController extends Controller
         Redis::del($token_key);
         return redirect($redirect_uri);
     }
+
+    /**
+     * 验证webtoken
+     */
+    public function checkToken(Request $request)
+    {
+        $token = $request->get('token');
+        if(empty($token)){          // 空token
+            $response = [
+                'errno' => 400003,
+                'msg'   => '未授权'
+            ];
+            return $response;
+        }
+
+        $token_key = 'h:login_info:'.$token;
+        $u = Redis::hGetAll($token_key);
+
+        if($u)        // 登录有效
+        {
+            $response = [
+                'errno' => 0,
+                'msg'   => 'ok',
+                'data'  => [
+                    'u' => $u
+                ]
+            ];
+        }else{
+            $response = [
+                'errno' => 400003,
+                'msg'   => '未授权'
+            ];
+        }
+
+        return $response;
+
+    }
 }
