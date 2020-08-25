@@ -58,7 +58,8 @@ class LoginController extends Controller
         {
             //执行登录
             $token = UserModel::webLogin($u->user_id,$u->user_name);
-            Cookie::queue('token',$token,60*24*30,'/','1910.com',false,true);      //120分钟
+            Cookie::queue('token',$token,60*24*30,'/','1910.com',false,false);      //120分钟
+            Cookie::queue('u',$u->user_name,60*24*30,'/','1910.com',false,false);      //120分钟
             $data = [
                 'redirect'  => $redirect_uri,
                 'msg'       => "登录成功，正在跳转"
